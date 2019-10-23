@@ -1,0 +1,134 @@
+前情回顾
+
+1. 基础概念
+   * 什么是数据库
+   * 为什么使用数据库
+   * 数据库分类
+     关系型 & 非关系型
+     开源 & 非开源
+     大型 & 中型 & 小型
+
+   * 数据库的组织结构
+     数据元素 --》记录--》数据表--》数据库
+                 row    table   database
+
+     列 column
+     主键： primary key
+     自增：auto_increment
+
+2. mysql  关系型   开源  c/c++
+
+   安装数据库
+
+3. SQL语句
+
+   * 数据库操作
+
+     show databases;
+     create database [db_name];
+     select database();
+     show create database [db];
+     use [db];
+     drop database [db];
+
+   * 数据表
+
+     show tables;
+     create table [tb_name] (column1 type,...);
+
+         * 字段约束
+           primary key
+           unsigned
+           not null
+           default [value]
+           auto_increment
+
+         * 数据类型
+
+           数字 ： 整数   小数   布尔
+
+           字符串： char  varchar  text  blob
+                   enum  set
+
+           时间日期
+
+     desc [tb];
+     show create table [tb];
+     drop table [tb];
+
+   * 增 查
+
+     insert into [tb_name] [column1,...] values (val,...)
+
+     select [*/column,..] from [tb] [where ...]
+
+     where 子句
+
+         算数   逻辑   比较   位运算
+
+
+练习1： 使用book表
+
+      1. 将某一本书的价格修改为45
+      update book set price = 45 where title='骆驼祥子';
+
+      2. 增加一个字段 出版日期 类型为 date 放在出版社后面
+
+      alter table book add publication_date date after publication;
+
+      3. 将所有书的出版日期定位 1990-10-1
+
+      update book set publication_date='1990-10-1';
+
+      4. 修改其中两三本的出版日期，日期自定
+
+      5. 删除所有出版日期在1990年之前的图书
+     delete from book where publication_date < '1990-01-01';
+
+练习2：
+
+   1. 创建表 ： sanguo
+
+    id  name  gender  country  attack  defense
+                               >100    0-100
+
+      create table sanguo (id int primary key auto_increment,name varchar(32),gender enum('男','女'),country enum('蜀','魏','吴'),attack smallint,defense tinyint);
+
+
+   2. 插入5条左右记录
+      蜀    诸葛亮  孙尚香  张飞  赵云
+      魏    司马懿   夏侯渊  张辽  甄姬
+      吴    周瑜   陆逊   小乔
+
+   3. 综合练习
+      查找所有蜀国人信息
+      select * from sanguo where country='蜀';
+
+      将赵云攻击力设置为360，防御68
+      update sanguo set attack=360,defense=68 where name = '赵云';
+
+      将吴国英雄攻击力超过300的改为300，防御改为60
+      update sanguo set attack=300,defense=60 where country = '吴' and attack > 300;
+
+      查找攻击力高于250的蜀国英雄名字和攻击力
+      select name,attack from sanguo where country='蜀' and attack>250;
+
+      将所有英雄按攻击力从高到底排序，如果攻击力相同按照防御力从高到底排序
+      select * from sanguo order by attack desc,defense desc;
+
+      将魏蜀两国英雄名字为三个字的按防御力升序排序
+      select * from sanguo where country in ('魏','蜀') and name like '___' order by defense;
+
+      找到吴国英雄中攻击力前2的英雄，且名字不能为NULL
+
+     select * from sanguo where country='吴' and name is not null order by attack desc limit 2;
+
+
+作业： 1. 对index_test表 name 字段创建索引，然后查询，看一下和没有创建索引差别。
+      2.  巩固今天所有的语句
+
+
+
+
+
+
